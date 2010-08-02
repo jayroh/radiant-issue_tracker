@@ -1,0 +1,19 @@
+- body_classes << "issue issue_edit"
+
+%h1 Edit Issue
+
+- form_for :issue, @issue, :url => admin_issues_url, :method => :put, :html => {:multipart => true} do |f|
+
+  = render :partial => "form", :locals => { :f => f, :issue => @issue }
+  
+  %p.buttons
+    %input.button{:type=>"submit", :value=>"Save Changes"}/
+    %input.button{:type=>"submit", :value=>"Save and Continue Editing"}/
+    or
+    %a{:href=>"/admin/acme/widgets/"} Cancel
+  
+  %p.updated_line
+    Last updated by
+    %strong Administrator
+    at 3:25 pm
+    on April 19, 2008

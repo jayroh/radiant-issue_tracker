@@ -1,0 +1,25 @@
+= error_messages_for :issue
+.form_area
+  %p
+    %label{:for=>"issue_description"} Description of Issue
+    = f.text_area "description", { :class => 'textarea', :style => "width: 99.5%; height: 7em" }
+  .set
+    %p
+      %label{:for=>"issue_priority"} Priority
+      = f.select "priority", [["Important", 1], ["Medium", 2], ["Low", 3]], {:include_blank => true, :selected => @issue.priority}, {:style=>"font-size:140%; width:333px;"}
+    %p
+      %label{:for=>"issue_browser"} Browser Name &amp; Version
+      = f.text_field "browser", :class => 'textbox', :maxlength => 255, :size=>30, :value=>request.env["HTTP_USER_AGENT"]
+  .set
+    %p
+      %label{:for=>"issue_path"} URL to Issue
+      = f.text_field "path", :class => 'textbox', :size=>30
+    %p
+      %label{:for=>"issue_status"} Current Status
+      = f.select "status", [["Open", 1], ["Closed", 0]], {}, {:style=>"font-size:140%; width:333px;"}
+  %p 
+    %label{:for=>"issue_attachment"} Screenshots
+    - 3.times {@issue.issue_attachments.build}
+    - f.fields_for :issue_attachments do |s|
+      %p
+        = s.file_field :screenshot, :class => 'file'
