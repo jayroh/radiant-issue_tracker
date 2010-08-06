@@ -8,8 +8,6 @@
  * http://www.gnu.org/licenses/gpl.html
  *
  */
-
-
 (function($) {
 
   $.fn.expander = function(options) {
@@ -150,3 +148,41 @@
     onCollapse: function($thisEl, byUser) {}
   };
 })(jQuery);
+
+
+// ========================================================
+// = HANDLE ISSUE LIST FOR VISITOR-FACING PORTION OF SITE =
+// ========================================================
+var j = jQuery.noConflict();
+
+j(document).ready(function(){
+	
+	// test to make sure we're not in the admin interface
+	if(window.location.href.indexOf('/admin') < 0)
+	{
+		j.ajax({
+		    type: "GET",
+		    url: '/admin/issues',
+		    success: function(data, textStatus){
+	            response = j(data);
+				if(response.find('h1:contains("Please Login")').length)
+				{
+					// ... don't do anything
+				} else {
+					// ... set up the pane with tracker actions and table
+				}
+		    }
+		});
+	}
+	
+	// set the expandability of the description(s)
+	j('table#issues td.description').expander({
+	    slicePoint:       180,  	// default is 100
+		expandPrefix:     '',       // don't show the default ellipsis
+		expandEffect:     'fadeIn', // duh
+	    expandText:       '[...]', 	// default is 'read more...'
+	    collapseTimer:    0, 		// re-collapses after 5 seconds; default is 0, so no re-collapsing
+	    userCollapseText: '[^]'  	// default is '[collapse expanded text]'
+	  });
+	
+});
