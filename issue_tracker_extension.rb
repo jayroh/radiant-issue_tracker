@@ -16,8 +16,8 @@ class IssueTrackerExtension < Radiant::Extension
   # See your config/routes.rb file in this extension to define custom routes
   
   def activate
-    tab 'Content' do
-     add_item "Issue Tracker", "/admin/issues", :after => "Pages"
+    tab 'Issue Tracker' do
+     add_item "Current Issues", "/admin/issues"
     end
   end
 end
