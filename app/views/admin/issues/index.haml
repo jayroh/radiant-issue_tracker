@@ -5,11 +5,12 @@
         %th.priority &nbsp;
         %th.description Description
         %th.browser Browser
-        %th.link &nbsp;
+        %th.link Location
         %th.actions Modify
     %tbody
       - unless @issues.empty?
         - @issues.each do |issue|
+          - browser = UserAgent.parse(issue.browser)
           %tr.issue
             %td{:class => "priority p-#{issue.priority}"} 
               %span
@@ -17,7 +18,7 @@
             %td.description
               = issue.description
             %td.browser
-              = issue.browser
+              %small #{browser.browser} #{browser.version} <br /> #{browser.os}
             %td.link
               = link_to image('page.png'), issue.path
             %td.actions
