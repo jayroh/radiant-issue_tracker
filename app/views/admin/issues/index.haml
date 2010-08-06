@@ -1,0 +1,31 @@
+.outset
+  %table.index#issues
+    %thead
+      %tr
+        %th.priority &nbsp;
+        %th.description Description
+        %th.browser Browser
+        %th.link &nbsp;
+        %th.actions Modify
+    %tbody
+      - unless @issues.empty?
+        - @issues.each do |issue|
+          %tr.issue
+            %td{:class => "priority p-#{issue.priority}"} 
+              %span
+                = issue.priority
+            %td.description
+              = issue.description
+            %td.browser
+              = issue.browser
+            %td.link
+              = link_to image('page.png'), issue.path
+            %td.actions
+              = link_to image('minus.png') + " Close", "/admin/acme/widgets/remove", :class=>"action"
+      - else
+        %tr
+          %td.empty{:colspan=>2} No Issues! No Bugs!
+
+#actions
+  %ul
+    %li= link_to image('plus.png') + " New Issue", new_admin_issue_path
