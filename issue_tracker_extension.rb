@@ -8,6 +8,7 @@ class IssueTrackerExtension < Radiant::Extension
   
   extension_config do |config|
     config.gem 'paperclip'
+    config.gem 'useragent'
     #   config.after_initialize do
     #     run_something
     #   end
