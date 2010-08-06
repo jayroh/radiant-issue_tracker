@@ -160,29 +160,98 @@ j(document).ready(function(){
 	// test to make sure we're not in the admin interface
 	if(window.location.href.indexOf('/admin') < 0)
 	{
-		j.ajax({
-		    type: "GET",
-		    url: '/admin/issues',
-		    success: function(data, textStatus){
-	            response = j(data);
-				if(response.find('h1:contains("Please Login")').length)
-				{
-					// ... don't do anything
-				} else {
-					// ... set up the pane with tracker actions and table
-				}
-		    }
-		});
+		ISSUE_TRACKER.visitor.get_issues(); // get, create and show the issues
 	}
-	
-	// set the expandability of the description(s)
-	j('table#issues td.description').expander({
-	    slicePoint:       180,  	// default is 100
-		expandPrefix:     '',       // don't show the default ellipsis
-		expandEffect:     'fadeIn', // duh
-	    expandText:       '[...]', 	// default is 'read more...'
-	    collapseTimer:    0, 		// re-collapses after 5 seconds; default is 0, so no re-collapsing
-	    userCollapseText: '[^]'  	// default is '[collapse expanded text]'
-	  });
+	ISSUE_TRACKER.world.expander();
 	
 });
+
+// ===================================
+// = Own the Issue Tracker namespace =
+// ===================================
+
+var ISSUE_TRACKER = {
+	
+	// split these up into separate contexts - user-facing, admin-facing, and both.
+	
+	visitor : { // public-facing side only
+		
+		admin_response : null,
+		
+		issues_table : null,
+		
+		issue_count : 0,
+		
+		issue_current_page_count : 0,
+
+		get_issues : function()
+		{
+			j.ajax({
+			    type: "GET",
+			    url: '/admin/issues',
+			    complete: function(data, textStatus){
+
+		            ISSUE_TRACKER.visitor.admin_response = j(data.responseText);
+					
+					if(ISSUE_TRACKER.visitor.admin_response.find('h1:contains("Please Login")').length)
+					{
+						// ... don't do anything.  we're not logged in.
+					} else {
+
+						ISSUE_TRACKER.visitor.issue_count 				= j(ISSUE_TRACKER.visitor.admin_response[0]).find('tr.issue').length;
+						ISSUE_TRACKER.visitor.issue_current_page_count 	= j(ISSUE_TRACKER.visitor.admin_response[0]).find('tr.issue td.link a[href="'+ window.location.href +'"]').length;
+						ISSUE_TRACKER.visitor.issues_table 				= j(ISSUE_TRACKER.visitor.admin_response[0]).find('table')[0];
+
+						ISSUE_TRACKER.visitor.show_pane();
+						ISSUE_TRACKER.world.expander();
+					}
+			    }
+			});
+			return true;
+		},
+		
+		show_pane : function()
+		{
+
+			j('body').append('<div id="issues_pane">\
+				<div id="issues_table"></div>\
+				<div id="issues_status">\
+					total: '+ ISSUE_TRACKER.visitor.issue_count +'\
+				    current page: '+ ISSUE_TRACKER.visitor.issue_current_page_count +'\
+				</div>\
+				<div id="issues_actions">\
+				\
+				</div>\
+			</div>');
+			
+			if(ISSUE_TRACKER.visitor.issue_count)
+			{
+				j('#issues_table').append(ISSUE_TRACKER.visitor.issues_table);
+			}
+			
+		}
+		
+	},
+	
+	admin : { // admin-facing side only
+		
+	},
+	
+	world : { // both sides
+		
+		expander : function()
+		{
+			// set the expandability of the description(s)
+			j('table#issues td.description').expander({
+			    slicePoint:       180,  	// default is 100
+				expandPrefix:     '',       // don't show the default ellipsis
+				expandEffect:     'fadeIn', // duh
+			    expandText:       '[...]', 	// default is 'read more...'
+			    collapseTimer:    0, 		// re-collapses after 5 seconds; default is 0, so no re-collapsing
+			    userCollapseText: '[^]'  	// default is '[collapse expanded text]'
+			  });
+		}
+		
+	}
+	
+}
