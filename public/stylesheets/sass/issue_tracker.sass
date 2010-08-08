@@ -1,0 +1,77 @@
+/* ...............................................................................
+/* ................................................................. Joel Oliveira
+/* ...................................................... http://github.com/jayroh
+/* ..................................................... http://twitter.com/jayroh
+/* ....................................................... http://joeloliveira.com
+/* 
+/*
+
+@import admin/modules/rounded.sass
+@import admin/modules/shadow.sass
+@import admin/modules/opacity.sass
+@import modules/singletons.sass
+@import modules/issue_table.sass
+
+/* --- user-facing specific styles ---
+
+#issues_pane
+  width: 100%
+  position: fixed
+  top: 0
+  text-align: center
+  #issues_table, #issues_status
+    background: #fff
+    width: 90%
+    margin: 0 auto
+  #issues_table
+    padding: 10px 10px 10px 10px
+    border: solid 2px #efefef
+    +round-bottom-corners(10px)
+    +box-shadow(2px, 2px, 4px, #666666)
+    table
+      width: 100%
+      tbody 
+        tr:nth-child(2n+1)
+          background-color: #efefef
+    >div
+      border-color: #DDDDDD
+      border-style: dotted none
+      border-width: 1px medium
+      height: 3px
+      margin: 10px auto 0
+      position: relative
+      width: 100%
+      a
+        background: none repeat scroll 0 0 #FFFFFF
+        border-bottom: medium none
+        color: #AAAAAA
+        display: inline-block
+        font-size: 9px
+        letter-spacing: 2px
+        padding: 0 15px
+        position: relative
+        text-transform: uppercase
+        top: -9px
+  #issues_status
+    background: transparent
+    text-align: right
+    padding-top: 10px
+    span, a
+      +box-shadow(2px, 2px, 4px, #666666)
+      background: #fff
+      font-weight: bold
+      display: inline-block
+      height: 18px
+      padding: 2px 10px 0
+      text-transform: uppercase
+      font-size: 11px
+      +round-corners(10px)
+    .total
+      background: #efefef
+    a
+      border-bottom: none
+      background: #fff
+      color: #333
+      +vertical-gradient( #FFF, #BBB, #FFF)
+    a:hover
+      background: #fff

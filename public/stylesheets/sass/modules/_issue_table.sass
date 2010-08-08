@@ -1,0 +1,32 @@
+/* ----------- The Issues Table ---------------------------------------------
+
+#issues
+  th.priority, td.priority
+    width: 30px
+  th.browser, td.browser
+    width: 150px
+  th.link, td.link
+    width: 100px
+  th.actions, td.actions
+    width: 100px
+  tbody
+    td
+      vertical-align: top
+    td.priority
+      span
+        border: solid 2px #fff
+        +round-corners(6px)
+        +box-shadow(1px, 2px, 2px, #707070)
+        margin: 5px 0 0 5px
+        display: inline-block
+        height: 10px
+        width: 10px
+        text-indent: -9999px
+    td.p-1 span
+      +vertical-gradient(#780000, #B80000, #780000)
+    td.p-2 span
+      +vertical-gradient(#FF9900, #FFCC66, #FF9900)
+    td.p-3 span
+      +vertical-gradient(#3399CC, #99CCFF, #3399CC)
+    td.browser small
+      font-size: 10px
