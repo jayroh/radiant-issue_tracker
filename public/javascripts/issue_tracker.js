@@ -216,17 +216,15 @@ var ISSUE_TRACKER = {
 			j('body').append('<div id="issues_pane">\
 				<div id="issues_table"></div>\
 				<div id="issues_status">\
-					total: '+ ISSUE_TRACKER.visitor.issue_count +'\
-				    current page: '+ ISSUE_TRACKER.visitor.issue_current_page_count +'\
-				</div>\
-				<div id="issues_actions">\
-				\
+			        <span class="current">'+ ISSUE_TRACKER.visitor.issue_current_page_count +'</span>\
+					<span class="total">'+ ISSUE_TRACKER.visitor.issue_count +'</span>\
+					<a href="/admin/issues/new">report a new issue</a>\
 				</div>\
 			</div>');
 			
 			if(ISSUE_TRACKER.visitor.issue_count)
 			{
-				j('#issues_table').append(ISSUE_TRACKER.visitor.issues_table);
+				j('#issues_table').append(ISSUE_TRACKER.visitor.issues_table).append("<div><a href=\"#show_pane\">show all issues</a></div>");
 			}
 			
 		}
